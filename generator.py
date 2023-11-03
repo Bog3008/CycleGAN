@@ -14,8 +14,6 @@ class ConvBlock(nn.Module):
         
         if use_activation:
             moduls.append(nn.ReLU(True))
-        else:
-            moduls.append(nn.Identity())
 
         self.conv = nn.Sequential(*moduls)
 
@@ -109,25 +107,29 @@ class Generator(nn.Module):
     
 #Unfortunately, I havn't come up with a better name
 def gen_get_output_and_print_shapes(model, x):
-    output_str_length = 15
+    output_str_length = 20
 
-    print('input x'.ljust(output_str_length), x.shape)
+    names_and_shapes = {'input': x.shape}
     
     x = model.inital_conv_blocks(x)
-    print('after inital'.ljust(output_str_length), x.shape)
+    names_and_shapes['after inital'] = x.shape
 
     x = model.down_blocks(x)
-    print('after down'.ljust(output_str_length), x.shape)
+    names_and_shapes['after down'] = x.shape
 
     x = model.res_blocks(x)
-    print('after residual'.ljust(output_str_length), x.shape)
+    names_and_shapes['after residual'] = x.shape
 
     x = model.up_conv_blocks(x)
-    print('after up'.ljust(output_str_length), x.shape)
+    names_and_shapes['after up'] = x.shape
 
     x = model.last_blocks(x)
-    print('after last'.ljust(output_str_length), x.shape)
-    return x
+    names_and_shapes['after last'] = x.shape
+
+    for name, shape in names_and_shapes.items():
+        print(name.ljust(output_str_length), shape)
+
+    return x.shape
 
 def test_gen_shape(silent_mode=False):
     gen = Generator(img_channels = 3)
@@ -136,7 +138,7 @@ def test_gen_shape(silent_mode=False):
     if silent_mode:
         final_shape = gen(noise).shape
     else:
-        final_shape = gen_get_output_and_print_shapes(gen, noise).shape
+        final_shape = gen_get_output_and_print_shapes(gen, noise)
     
     assert noise.shape == final_shape, f'Input and ouput from Generator have different shapes. Input shape is {noise.shape}. But output is {final_shape}'
     
@@ -163,13 +165,15 @@ def print_layers():
 
 
 if __name__ == '__main__':
-    print('start testing summer_winter_dataset')
+    print('start testing generator')
 
     test_gen_shape()
     print('-'*20)
-    print_layers()
+    #print_layers()
 
-    print('summer_winter_dataset successfuly passed all tests')
+    print('generator successfuly passed all tests')
+
+
 
 
         
