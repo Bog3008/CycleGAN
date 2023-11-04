@@ -74,6 +74,7 @@ def test_1(summer_path, winter_path, silent_mode = False):
 
     # craeting Dataset
     try:
+        
         sw_ds = SummerWinterDataset(summer_path=summer_path,
                                     winter_path=winter_path,
                                     image_size = 256,
@@ -150,8 +151,9 @@ def test_2(summer_path, winter_path , n=5,):
 if __name__ == '__main__':
     print('start testing summer_winter_dataset')
 
-    summer_path = 'CycleGAN/data/test_summer'
-    winter_path = 'CycleGAN/data/test_winter'
+    current_directory = os.getcwd()
+    summer_path = os.path.join(current_directory, 'data/test_summer')
+    winter_path = os.path.join(current_directory, 'data/test_winter')
 
     test_1(summer_path, winter_path)
     test_2(summer_path, winter_path)

@@ -5,6 +5,8 @@ training for CycleGAN
 import torch
 import torch.nn as nn
 import torch.optim as optim
+from torch.utils.data import DataLoader
+from torchvision.utils import save_image
 
 from summer_winter_dataset import SummerWinterDataset
 from generator import Generator
@@ -12,8 +14,6 @@ from discriminator import Discriminator
 import config
 
 from tqdm import tqdm
-
-from torchvision.utils import save_image
 
 def train(disc_W, disc_S,
           gen_W, gen_S,
@@ -86,5 +86,55 @@ def train(disc_W, disc_S,
             save_image(fake_winter * 0.5 + 0.5, f'saved_train_image/winter_iter_{i}.png')
         
 
-def start_train():
+def run_train():
+    disc_W = Discriminator().to(config.DEVICE)
+    disc_S = Discriminator().to(config.DEVICE)
+
+    gen_W = Generator().to(config.DEVICE)
+    gen_S = Generator().to(config.DEVICE)
+
+    gen_scaler = torch.cuda.amp.GradScaler()
+    disc_scaler = torch.cuda.amp.GradScaler()
+
+    # we make step for both discriminators => have one optim for both discriminators simultaneously
+    optim_disc = config.OPTIMIZER(
+        list(disc_W.parameters()) + list(disc_S.parameters()),
+        lr = config.LEARNING_RATE
+    )
+    #the same for generators
+    optim_gen = config.OPTIMIZER(
+        list(gen_W.parameters()) + list(gen_S.parameters()),
+        lr = config.LEARNING_RATE
+    )
+
+    test_ds = SummerWinterDataset(summer_path=config.TEST_SUMM_DIR,
+                                    winter_path=config.TEST_WINT_DIR,
+                                    image_size=config.IMAGE_SIZE,
+                                    transform=config.TEST_TRANSFORMS)
+    test_dl = DataLoader(test_ds,
+                         batch_size=config.BATCH_SIZE, 
+                         shuffle=True, 
+                         num_workers=config.NUM_WORKERS,
+                         pin_memory=True)
     
+    train_ds = SummerWinterDataset(summer_path=config.TRAIN_SUMM_DIR,
+                                    winter_path=config.TRAIN_WINT_DIR,
+                                    image_size=config.IMAGE_SIZE,
+                                    transform=config.TRAIN_TRANSFORMS)
+    train_dl = DataLoader(train_ds,
+                         batch_size=config.BATCH_SIZE, 
+                         shuffle=True, 
+                         num_workers=config.NUM_WORKERS,
+                         pin_memory=True)
+    
+    for epo in config.EPOCHS:
+        train(disc_W=disc_W,
+              disc_S=disc_S,
+              gen_W=gen_W,
+              gen_S=gen_S,
+              optim_disc=optim_disc,
+              optim_gen=optim_gen,
+              disc_scaler=disc_scaler,
+              gen_scaler=gen_scaler,
+              dloader=train_dl
+            )
