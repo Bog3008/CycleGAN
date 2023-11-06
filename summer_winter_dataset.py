@@ -32,8 +32,8 @@ class SummerWinterDataset(Dataset):
         return self.len
     
     def __getitem__(self, indx):
-        summer_img_name = self.summer_imgs_names[indx]
-        winter_img_name = self.winter_imgs_names[indx]
+        summer_img_name = self.summer_imgs_names[indx % self.summer_len]
+        winter_img_name = self.winter_imgs_names[indx % self.winter_len]
 
         summer_img_full_path =  os.path.join(self.summer_path, summer_img_name)
         winter_img_full_path =  os.path.join(self.winter_path, winter_img_name)
