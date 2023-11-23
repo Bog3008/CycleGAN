@@ -37,8 +37,8 @@ class SummerWinterDataset(Dataset):
         summer_img_full_path =  os.path.join(self.summer_path, summer_img_name)
         winter_img_full_path =  os.path.join(self.winter_path, winter_img_name)
 
-        summer_img = self.transform(Image.open(summer_img_full_path))
-        winter_img = self.transform(Image.open(winter_img_full_path))
+        summer_img = self.transform(Image.open(summer_img_full_path).convert("RGB"))
+        winter_img = self.transform(Image.open(winter_img_full_path).convert("RGB"))
 
         return summer_img, winter_img
     

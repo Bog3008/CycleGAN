@@ -3,3 +3,8 @@ saved_train_images
 saved_models
 tb_logs
 __pycache__
+img_per_epo
+horse_zebra_ds
+yt_test
+saved_test_images
+monet2photo
