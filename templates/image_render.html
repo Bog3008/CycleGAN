@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Transformation App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form action="{{ url_for('upload_file') }}" enctype="multipart/form-data" method="POST">
+                    <div class="form-group">
+                        <label for="img">Select Image:</label>
+                        <input id="img" name="img" type="file" class="form-control-file" accept="image/*" required/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="transformation">Choose Transformation:</label>
+                        <select id="transformation" name="transformation" class="form-control">
+                            <option value="horse2zebra">horse2zebra</option>
+                            <option value="zebra2horse">zebra2horse</option>
+                            <option value="summer2winter">summer2winter</option>
+                            <option value="winter2summer">winter2summer</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Apply Transformation</button>
+                </form>
+
+                {% if img %}
+                <h1>Rendered Image</h1>
+                <img src="{{ img }}" alt="Rendered Image" class="img-fluid">
+                {% else %}
+                <h1>Image will be rendered here...</h1>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

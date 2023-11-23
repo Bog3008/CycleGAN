@@ -287,7 +287,7 @@ def run_train():
                           time=start_time)
 
 
-def test_model(num_to_saved=100):
+def test_model(num_to_saved=100, use_train=False):
     print('start_testing...')
     gen_W = Generator(img_channels=3).to(config.DEVICE)
     gen_S = Generator(img_channels=3).to(config.DEVICE)
@@ -307,8 +307,8 @@ def test_model(num_to_saved=100):
                                     winter_path=config.TEST_WINT_DIR,
                                     image_size=config.IMAGE_SIZE,
                                     transform=config.TEST_TRANSFORMS)
-    
-    train_ds = SummerWinterDataset(summer_path=config.TRAIN_SUMM_DIR,
+    if use_train == True:
+        test_ds = SummerWinterDataset(summer_path=config.TRAIN_SUMM_DIR,
                                     winter_path=config.TRAIN_WINT_DIR,
                                     image_size=config.IMAGE_SIZE,
                                     transform=config.TEST_TRANSFORMS) ## apply test transfmormation to evaluate amodel in correct way
@@ -345,4 +345,4 @@ def test_model(num_to_saved=100):
 
 if __name__ == '__main__':
     #run_train()
-    test_model()
+    test_model(use_train=True)

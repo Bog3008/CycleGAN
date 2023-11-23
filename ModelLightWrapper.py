@@ -2,7 +2,7 @@ from generator import Generator
 import config
 import torch
 import os
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 from torchvision.utils import save_image
 
 class GeneratorWrapper:
@@ -18,9 +18,6 @@ class GeneratorWrapper:
         '''
         transformation - smth like 'horse2zebra' or 'zebra2horse'
         '''
-        if transormation not in ['horse2zebra', 'zebra2horse', 'summer2winter', 'winter2summer']:
-            raise NotImplementedError
-        
         if not os.path.exists(image_path):
             raise RuntimeError(f'the path to image doesnt exist. You set{image_path}')
         
@@ -28,17 +25,25 @@ class GeneratorWrapper:
             self.load_model(transormation)
         
         image = Image.open(image_path)
-        image = config.TEST_TRANSFORMS(image)
 
-        generated_image = self.generator(torch.unsqueeze(image.to(config.DEVICE, dtype=torch.float), 0))
-        generated_image = generated_image[0].cpu()
+        image = config.TEST_TRANSFORMS(image)
+        image = torch.unsqueeze(image.to(config.DEVICE, dtype=torch.float), 0)
+
+        generated_image = self.generator(image)
+        #generated_image = generated_image[0]#.cpu()
 
         std=mean=0.5
-        generated_image = generated_image * std + mean
-        save_image(torch.cat((image, generated_image), dim=0), image_path)
+        #generated_image = generated_image * std + mean
+        
+        save_image(torch.cat((image, generated_image), dim=0)* std + mean, image_path)
+
+        return image_path
         
 
     def load_model(self, transormation):
+        if transormation not in self.transformations_paths.keys():
+            raise NotImplementedError(f'The transformation {transormation} not in transformations_paths.keys()')
+
         try:
             saved_model_path = self.transformations_paths[transormation]
         except:
