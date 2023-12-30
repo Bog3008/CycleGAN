@@ -6,7 +6,7 @@ from ModelLightWrapper import GeneratorWrapper
 
 ### model part
 print('preparing the model...')
-common_transf_paths = r'C:\Users\Bogdan\Desktop\models'
+common_transf_paths = ''#<Path to model weighs>
 transformtions_paths = {}
 trans_names = ['horse2zebra', 'zebra2horse', 'summer2winter', 'winter2summer']
 file_names = ['gen_zebras', 'gen_horse', 'gen_winter', 'gen_summer']
@@ -39,7 +39,6 @@ def apply_test_transformation(image_path, transformation):
     img.save(image_path)
     img.close()
 
-#def modify_image(image_path, transformation):
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -54,10 +53,9 @@ def upload_file():
         # Check if 'transformation' is in the form data
         if 'transformation' in request.form:
             transformation = request.form['transformation']
-            #apply_test_transformation(img_full_path, transformation)
             try:
                 img = generator(transormation=transformation, image_path=img_full_path)
-                #img=img_full_path
+        
             except Exception as e:
                 print(e)
                 # var img still contains path to server error img
@@ -67,7 +65,6 @@ def upload_file():
             # var img still contains path to server error img
             print("Transformation not specified.")
 
-        #img = img_full_path
         return render_template('image_render.html', img=img)
     return render_template('image_render.html')
 

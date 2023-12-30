@@ -10,7 +10,6 @@ import torch.nn as nn
 class ConvBlock(nn.Module):
     def __init__(self, in_channels, out_channels, norm_type = nn.InstanceNorm2d, use_activation=True, **kwargs):
         super().__init__()
-
         moduls = [
             nn.Conv2d(in_channels, out_channels, kernel_size=4, padding= 1, bias = True, padding_mode="reflect", **kwargs),
             norm_type(out_channels)]
@@ -26,7 +25,6 @@ class ConvBlock(nn.Module):
 class Discriminator(nn.Module):
     def __init__(self, in_channels = 3, n_features = [64, 128, 256, 512], use_sigmoid=True):
         super().__init__()
-
         self.init_block = nn.Sequential(
             nn.Conv2d(in_channels=in_channels,
                       out_channels= n_features[0],

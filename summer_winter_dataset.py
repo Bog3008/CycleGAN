@@ -52,7 +52,7 @@ class SummerWinterDataset(Dataset):
 
 
 
-# эти тесты вышлядят некрасиво, мне не нравится 
+
 class ContitionalPrint:
     def __init__(self, dont_print):
         self.dont_print = dont_print

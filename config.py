@@ -8,10 +8,12 @@ from torchvision import transforms
 from datetime import datetime
 import warnings
 import os
+import math
 
-LOAD_MODEL = False
-SAVED_MODEL_DIR_PATH =  r'saved_models\256\2023_11_22_16h36m'
-#zebrabase saved_models\256\2023_11_17_05h29m
+LOAD_MODEL = True
+SAVED_MODEL_DIR_PATH = r'saved_models\256\2023_12_04_06h57m'
+#This is my path to model 
+
 
 
 IMAGE_SIZE = 256
@@ -25,10 +27,13 @@ LAMBDA_CYCLE = 10
 
 BATCH_SIZE = 1
 EPOCHS = 200
-LEARNING_RATE =  1e-5 #3e-4
-OPTIMIZER = optim.Adam#W
+warmup_steps = 30
+total_lr_warmup_epochs = EPOCHS
 
-dataset_type = 'SW' # HZ - horse zebra; SW - summer winter
+LEARNING_RATE = 0.001
+OPTIMIZER = optim.AdamW
+
+dataset_type = 'HZ' # HZ - horse zebra; SW - summer winter
 ###DIR's###
 current_directory = os.getcwd()
 #here will be saved state_dict's pre training lauch
@@ -40,6 +45,7 @@ if dataset_type == 'SW':
 
     TRAIN_SUMM_DIR = os.path.join(current_directory, r'data\train_summer')
     TRAIN_WINT_DIR = os.path.join(current_directory, r'data\train_winter')
+
 elif dataset_type == 'HZ':
     TEST_SUMM_DIR = os.path.join(current_directory, r'horse_zebra_ds\testA')
     TEST_WINT_DIR = os.path.join(current_directory, r'horse_zebra_ds\testB')
@@ -67,22 +73,13 @@ TRAIN_TRANSFORMS = transforms.Compose([
 
 
 ### func's ###
-class lr_lambda:
-    def __init__(self, start_from = 0, lr=0.0002):
-        '''
-        if you wanna load model and continuou learning from 10th epo(for example) you shuld set start_from = 10 
-        '''
-        self.start_from = start_from
-        self.lr = lr
-        
+def warmup_lr_lambda(step):
+    if step < warmup_steps:
+        return float(step) / float(max(1, warmup_steps))
+    return max(0.0, 0.5 * (1.0 + math.cos((step - warmup_steps) / float(max(1, (total_lr_warmup_epochs+1) - warmup_steps)) * math.pi)))
+## <warmup>
 
-    def __call__(self, epoch):
-        epoch += self.start_from
-        if epoch < 100:
-            return 0.0002
-        else:
-            self.lr /= 2
-            return self.lr
+
 
 def get_time():
     current_datetime = datetime.now()
