@@ -7,10 +7,10 @@ The original [paper](https://arxiv.org/abs/1703.10593)
 ## Horse2Zebra  
 First i tryed [horese2zebra dataset](https://www.kaggle.com/datasets/balraj98/horse2zebra-dataset)
 
-On the left is the original picture, on the right it is changed, but it is obvious)  
-Horses to zebras translation:
-![hz1](images/HZ/h2z_1.png) ![hz2](images/HZ/h2z_2.png) ![hz3](images/HZ/h2z_3.png)
-Zebras to horses translation:
+On the left is the original picture, on the right it is changed, but it is obvious)      
+Horses to zebras translation:  
+![hz1](images/HZ/h2z_1.png) ![hz2](images/HZ/h2z_2.png) ![hz3](images/HZ/h2z_3.png)  
+Zebras to horses translation:  
 ![zh1](images/HZ/z2h_1.png) ![hz2](images/HZ/z2h_2.png) ![hz3](images/HZ/z2h_3.png)
 
 
@@ -25,11 +25,11 @@ Zebras to horses translation:
 ## Summer2Winter  
 Then i took [this dataset](https://www.kaggle.com/datasets/balraj98/summer2winter-yosemite)
 
-Summer to winter translation:
+Summer to winter translation:  
 The third images i found interesting, NN made snowdrop flower
-![sw1](images/SW/s2w_1.png) ![sw2](images/SW/s2w_2.png) ![sw3](images/SW/s2w_3.png)
-Winter to summer translation:
-![sw1](images/SW/w2s_1.png) ![sw2](images/SW/w2s_2.png) ![sw3](images/SW/w2s_3.png)
+![sw1](images/SW/s2w_1.png) ![sw2](images/SW/s2w_2.png) ![sw3](images/SW/s2w_3.png)  
+Winter to summer translation:  
+![sw1](images/SW/w2s_1.png) ![sw2](images/SW/w2s_2.png) ![sw3](images/SW/w2s_3.png)  
 
 * I got moderately good results
 * The translation from winter to summer does not work in the best way. Most likely there was not enough epochs
