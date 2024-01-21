@@ -10,7 +10,7 @@ import warnings
 import os
 import math
 
-LOAD_MODEL = True
+LOAD_MODEL = False
 SAVED_MODEL_DIR_PATH = r'saved_models\256\2023_12_04_06h57m'
 #This is my path to model 
 
@@ -33,7 +33,7 @@ total_lr_warmup_epochs = EPOCHS
 LEARNING_RATE = 0.001
 OPTIMIZER = optim.AdamW
 
-dataset_type = 'HZ' # HZ - horse zebra; SW - summer winter
+dataset_type = 'CC'# CC - cats cats 'HZ' # HZ - horse zebra; SW - summer winter
 ###DIR's###
 current_directory = os.getcwd()
 #here will be saved state_dict's pre training lauch
@@ -52,6 +52,12 @@ elif dataset_type == 'HZ':
 
     TRAIN_SUMM_DIR = os.path.join(current_directory, r'horse_zebra_ds\trainA')
     TRAIN_WINT_DIR = os.path.join(current_directory, r'horse_zebra_ds\trainB')
+elif dataset_type == 'CC':
+    TEST_SUMM_DIR = os.path.join(current_directory, r'lioncat\cats\test_cats')
+    TEST_WINT_DIR = os.path.join(current_directory, r'lioncat\bigCats_test')
+
+    TRAIN_SUMM_DIR = os.path.join(current_directory, r'lioncat\cats\train_cats')
+    TRAIN_WINT_DIR = os.path.join(current_directory, r'lioncat\bigCats')
 
 
 MAIN_TB_DIR = os.path.join(current_directory, 'tb_logs')
@@ -62,12 +68,12 @@ SAVED_MODELS_DIR = 'saved_models'
 TEST_TRANSFORMS = transforms.Compose([
                             transforms.ToTensor(),
                             transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5]), 
-                            transforms.Resize(IMAGE_SIZE, antialias=True)
+                            transforms.Resize((IMAGE_SIZE, IMAGE_SIZE), antialias=True)
                         ])
 TRAIN_TRANSFORMS = transforms.Compose([
                             transforms.ToTensor(),
                             transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5]), 
-                            transforms.Resize(IMAGE_SIZE, antialias=True),
+                            transforms.Resize((IMAGE_SIZE, IMAGE_SIZE), antialias=True),
                             transforms.RandomHorizontalFlip(p=0.5)
                         ])
 

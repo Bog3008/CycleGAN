@@ -39,3 +39,31 @@ Winter to summer translation:
 * As in the original article, I number of epochs = 200
 * I used LR sheduler with warmup on 30 epoch
 
+
+## Installation and run
+
+Clone the project
+
+```bash
+  git clone https://github.com/Bog3008/CycleGAN
+```
+
+Go to the project directory
+
+```bash
+  cd CycleGAN
+```
+
+Start the server
+
+```bash
+  & <your python interpreter path> app.py <your path to the folder with model weights>
+```
+* <your python interpreter path> - For example, for me, it looks like this: "D:/Anaconda/python.exe"
+* <your path to the folder with model weights>  - This folder should contain the following files: 'gen_zebras', 'gen_horse', 'gen_winter', 'gen_summer'  - weights for generators where the second word in name means the target domain transformation. For example, for me, it looks like this: "D:\CYCLEWEIGHTS".
+
+Then open http://localhost:9000/  
+Select the transformation you want  
+Upload image  
+Click on the "Apply Transformation" button  
+Wait a little bit and then you'll see the result

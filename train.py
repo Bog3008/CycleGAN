@@ -157,7 +157,7 @@ def train(disc_W, disc_S,
             #cycle consistency loss
             gen_winter_img = gen_W(fake_summer)
             gen_summer_img = gen_S(fake_winter)
-
+            
             winter_loss = l1(winter_img, gen_winter_img)
             summer_loss = l1(summer_img, gen_summer_img)
 
@@ -182,7 +182,7 @@ def train(disc_W, disc_S,
             save_image(torch.cat((winter_img, fake_summer), dim=0) * 0.5 + 0.5, f'saved_train_images/fake_summer_iter_{i}.png') 
             save_image(torch.cat((summer_img, fake_winter), dim=0) * 0.5 + 0.5, f'saved_train_images/fake_winter_iter_{i}.png')
         
-3
+
 def run_train():
     '''
     starts model training with params from config file
@@ -359,5 +359,5 @@ if __name__ == '__main__':
     # coose between train and test
     # test func will save in folder image translation result for 100 examples
 
-    #run_train()
-    test_model(use_train=True)
+    run_train()
+    #test_model(use_train=True)

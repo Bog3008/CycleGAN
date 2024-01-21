@@ -50,7 +50,7 @@ class ResidualBlock(nn.Module):
         return x + self.block(x)
     
 class Generator(nn.Module):
-    def __init__(self, img_channels, num_features=64, n_resblocks=9, norm_type = nn.InstanceNorm2d):
+    def __init__(self, img_channels, num_features=64, n_resblocks=6, norm_type = nn.InstanceNorm2d):
         super().__init__()
         
         self.inital_conv_blocks = nn.Sequential(

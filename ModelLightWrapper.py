@@ -13,16 +13,18 @@ class GeneratorWrapper:
         self.generator = Generator(img_channels=3).to(config.DEVICE)
         self.transformations_paths = transformations_paths
 
-        self.current_transformation = None
-    def __call__(self, transormation, image_path):
+        self.transformation = None
+    def __call__(self, transformation, image_path):
         '''
         transformation - smth like 'horse2zebra' or 'zebra2horse'
         '''
         if not os.path.exists(image_path):
-            raise RuntimeError(f'the path to image doesnt exist. You set{image_path}')
+            raise RuntimeError(f'the path to image doesnt exist. You set {image_path}')
         
-        if transormation != self.current_transformation:
-            self.load_model(transormation)
+        if transformation != self.transformation:
+            self.transformation = transformation
+        
+        self.load_model(self.transformation)
         
         image = Image.open(image_path)
 
