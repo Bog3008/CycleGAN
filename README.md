@@ -59,8 +59,8 @@ Start the server
 ```bash
   & <your python interpreter path> app.py <your path to the folder with model weights>
 ```
-* <your python interpreter path> - For example, for me, it looks like this: "D:/Anaconda/python.exe"
-* <your path to the folder with model weights>  - This folder should contain the following files: 'gen_zebras', 'gen_horse', 'gen_winter', 'gen_summer'  - weights for generators where the second word in name means the target domain transformation. For example, for me, it looks like this: "D:\CYCLEWEIGHTS".
+* "your python interpreter path" - For example, for me, it looks like this: "D:/Anaconda/python.exe"
+* "your path to the folder with model weights"  - This folder should contain the following files: 'gen_zebras', 'gen_horse', 'gen_winter', 'gen_summer'  - weights for generators where the second word in name means the target domain transformation. For example, for me, it looks like this: "D:\CYCLEWEIGHTS".
 
 Then open http://localhost:9000/  
 Select the transformation you want  
