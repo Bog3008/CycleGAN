@@ -1,0 +1,8 @@
+pip~=23.1.2
+torch>=2.1.2
+torchvision>=0.16.2
+pillow~=10.0.0
+werkzeug~=2.2.3
+flask~=2.2.2
+matplotlib~=3.7.1
+tqdm~=4.65.0

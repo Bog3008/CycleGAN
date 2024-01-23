@@ -41,6 +41,10 @@ Winter to summer translation:
 
 
 ## Installation and run
+Install the dependencies  
+```bash
+pip install -r requirements.txt
+```  
 
 Clone the project
 
@@ -67,3 +71,11 @@ Select the transformation you want
 Upload image  
 Click on the "Apply Transformation" button  
 Wait a little bit and then you'll see the result
+
+## Pretrained models
+The wieghts for model are available:  
+[Generator to winter](https://drive.google.com/file/d/14LsiKrQivNwW8laLPWNXFDJYRYoXDED0/view?usp=sharing)  
+[Generator to summer](https://drive.google.com/file/d/1s3lyme5RhvCck9FJ5UtfuQAYgOe4Ym5M/view?usp=sharing) 
+
+ &ndash; Where are the wieghts for zebras and horses ?  
+ &ndash; I accidentally deleted it...

@@ -345,8 +345,10 @@ def test_model(num_to_saved=100, use_train=False):
         fake_summ = fake_summ
         fake_win = fake_win
         
-        save_image(torch.cat((winter_img, fake_summ), dim=0) * 0.5 + 0.5, f'saved_test_images/fake_summer_iter_{i}.png') 
-        save_image(torch.cat((summer_img, fake_win), dim=0) * 0.5 + 0.5, f'saved_test_images/fake_winter_iter_{i}.png')
+        save_image(fake_summ * 0.5 + 0.5, f'saved_test_images/fake_summer_iter_{i}.png') 
+        save_image(fake_win * 0.5 + 0.5, f'saved_test_images/fake_winter_iter_{i}.png')
+        #save_image(torch.cat((winter_img, fake_summ), dim=0) * 0.5 + 0.5, f'saved_test_images/fake_summer_iter_{i}.png') 
+        #save_image(torch.cat((summer_img, fake_win), dim=0) * 0.5 + 0.5, f'saved_test_images/fake_winter_iter_{i}.png')
         
         os.system('cls')
         print(f'Processed {1+i}/{min(num_to_saved, len(test_ds))}')
@@ -359,5 +361,5 @@ if __name__ == '__main__':
     # coose between train and test
     # test func will save in folder image translation result for 100 examples
 
-    run_train()
-    #test_model(use_train=True)
+    #run_train()
+    test_model(use_train=True)
