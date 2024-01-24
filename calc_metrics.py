@@ -1,4 +1,5 @@
 import os
+import sys
 import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
@@ -12,8 +13,6 @@ from ignite.utils import *
 from ignite.contrib.metrics.regression import *
 from ignite.contrib.metrics import *
 
-generated_imgs_folder_path = r'D:\VS_code_proj\CycleGAN\evaluation\generated_summer'
-gt_imgs_folder_path = r'D:\VS_code_proj\CycleGAN\evaluation\test_summer'
 
 def get_images_list(path, transform):
     img_t_list = []
@@ -27,8 +26,6 @@ def get_images_list(path, transform):
 
 def calc_IS(generated_images):
     
-    #generated_images = get_images_list(generated_imgs_path, transform)
-    
     def eval_step(engine, batch):
         return batch
     default_evaluator = Engine(eval_step)
@@ -37,8 +34,8 @@ def calc_IS(generated_images):
     metric.attach(default_evaluator, "is")
     state = default_evaluator.run([generated_images])
     
-    print('IS score is:', state.metrics["is"])
-    return
+    #print('IS score is:', state.metrics["is"])
+    return state.metrics["is"]
 
 def calc_FID(generated_imgs, gt_images):
     def eval_step(engine, batch):
@@ -47,10 +44,12 @@ def calc_FID(generated_imgs, gt_images):
 
     os.environ['KMP_DUPLICATE_LIB_OK']='True'
     # comparable metric
-    pytorch_fid_metric = FID()#num_features=dims, feature_extractor=wrapper_model)
+    pytorch_fid_metric = FID()
     pytorch_fid_metric.attach(default_evaluator, "fid")
     state = default_evaluator.run([[generated_imgs, gt_images]])
-    print('fid', state.metrics["fid"])
+    
+    #print('fid', state.metrics["fid"])
+    return state.metrics["fid"]
 
 def calc_metrics():
     # Calculate FID and Inception Score
@@ -65,10 +64,33 @@ def calc_metrics():
     gt_images = get_images_list(gt_imgs_folder_path, transform)
     min_len = min(len(generated_imgs), len(gt_images)) # number of examples in FID for y_pred and y_gt must be the same  
     
-    #calc_IS(generated_imgs)
-    
-    calc_FID(generated_imgs[:min_len], gt_images[:min_len])
+    IS = calc_IS(generated_imgs)
+    FID = calc_FID(generated_imgs[:min_len], gt_images[:min_len])
+
+    print('IS:', IS)
+    print('FID:', FID)
 
 if __name__ == '__main__':
-    #calc_FID()
+    if len(sys.argv) != 3: #file name, path to generated images and path to gt images
+        raise RuntimeError('Incorrect number of arguments. You must specify only path to generated images folder and to gt images folder')  
+    generated_imgs_folder_path = sys.argv[1]
+    gt_imgs_folder_path = sys.argv[2]
+    print('start calculating IS and FID')
     calc_metrics()
+
+# summer
+#D:\VS_code_proj\CycleGAN\evaluation\generated_summer
+#D:\VS_code_proj\CycleGAN\evaluation\test_summer
+#winter
+#D:\VS_code_proj\CycleGAN\evaluation\generated_win
+#D:\VS_code_proj\CycleGAN\evaluation\test_winter
+
+#D:/Anaconda/python.exe d:/VS_code_proj/CycleGAN/CycleGAN/calc_metrics.py 
+'''
+Summer
+IS: 3.505470456649775
+FID: 0.11375601871979296
+
+Winter
+IS: 2.7693440524808484
+FID: 0.09692788565606697'''

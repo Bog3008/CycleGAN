@@ -79,3 +79,46 @@ The wieghts for model are available:
 
  &ndash; Where are the wieghts for zebras and horses ?  
  &ndash; I accidentally deleted it...
+
+## Metrics
+
+<table>
+  <tr>
+    <th>Company</th>
+    <th>Contact</th>
+    <th>Country</th>
+  </tr>
+  <tr>
+    <td>Alfreds Futterkiste</td>
+    <td>Maria Anders</td>
+    <td>Germany</td>
+  </tr>
+  <tr>
+    <td>Centro comercial Moctezuma</td>
+    <td>Francisco Chang</td>
+    <td>Mexico</td>
+  </tr>
+</table>
+
+## Run metrics
+Open the project folder 
+```bash
+cd CycleGAN
+```  
+
+Run calc_metrics.py
+
+```bash
+  & <your python interpreter path> calc_metrics.py <path to generated images folder> <your path to real images folder> 
+```
+Images folders must contain only images. The structure should look this:
+
+Generated_Images/  
+├── img1.png   
+├── img2.png  
+├── img3.png 
+
+Real_Images/  
+├── img_r1.jpg   
+├── img2_r.jpg  
+├── img3_r.jpg 
