@@ -84,19 +84,19 @@ The wieghts for model are available:
 
 <table>
   <tr>
-    <th>Company</th>
-    <th>Contact</th>
-    <th>Country</th>
+    <th>Model Type</th>
+    <th>IS</th>
+    <th>FID</th>
   </tr>
   <tr>
-    <td>Alfreds Futterkiste</td>
-    <td>Maria Anders</td>
-    <td>Germany</td>
+    <td>To summer</td>
+    <td>3.5054</td>
+    <td>0.1137</td>
   </tr>
   <tr>
-    <td>Centro comercial Moctezuma</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
+    <td>To winter</td>
+    <td>2.7693</td>
+    <td>0.0969</td>
   </tr>
 </table>
 
