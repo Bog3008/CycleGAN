@@ -58,7 +58,7 @@ Go to the project directory
   cd CycleGAN
 ```
 
-Start the server
+### Start the server(web app)
 
 ```bash
   & <your python interpreter path> app.py <your path to the folder with model weights>
@@ -71,6 +71,29 @@ Select the transformation you want
 Upload image  
 Click on the "Apply Transformation" button  
 Wait a little bit and then you'll see the result
+
+### Run train
+
+```bash
+  & <your python interpreter path> train.py <folder train A> <folder train B> <folder test A> <folder test B> 
+```
+
+This is how it looks for me:  
+```bash
+D:/Anaconda/python.exe d:/VS_code_proj/CycleGAN/CycleGAN/train.py data\train_summer data\train_winter data\test_summer data\test_winter
+```
+data\\... - local path (this folders are in the project folder)
+
+### Run inference
+
+```bash
+  & <your python interpreter path> inference.py <image path> <path to the model> <path for generated image to save> 
+```
+This is how it looks for me:  
+```bash
+D:/Anaconda/python.exe d:/VS_code_proj/CycleGAN/CycleGAN/inference.py D:\VS_code_proj\CycleGAN\CycleGAN\saved_test_images\fake_summer_iter_0.png saved_models\256\2023_12_01_05h33m\gen_W D:\
+```
+saved_models\\... - local path (this folder are in the project folder)
 
 ## Pretrained models
 The wieghts for model are available:  

@@ -21,6 +21,7 @@ import os
 from datetime import datetime
 import time
 import warnings
+import sys
 
 import matplotlib.pyplot as plt
 
@@ -361,5 +362,15 @@ if __name__ == '__main__':
     # coose between train and test
     # test func will save in folder image translation result for 100 examples
 
-    #run_train()
-    test_model(use_train=True)
+    
+    if len(sys.argv) != 5: #file name, path to generated images and path to gt images
+        raise RuntimeError('Incorrect number of arguments. You must specify only path to train A, train B, test A, test B. 5 in total')  
+    TRAIN_SUMM_DIR = sys.argv[1]
+    TRAIN_WINT_DIR = sys.argv[2]
+    TEST_SUMM_DIR = sys.argv[3]
+    TEST_WINT_DIR = sys.argv[4]
+
+    run_train()
+    #test_model(use_train=True)
+
+# D:/Anaconda/python.exe d:/VS_code_proj/CycleGAN/CycleGAN/train.py data\train_summer data\train_winter data\test_summer data\test_winter
